@@ -8,14 +8,13 @@ namespace Task_3
 {
     internal class Employee : Person
     {
-        public string Jobtitle { get; set; }
         public List<Customer> Customers { get; set; } = new List<Customer>();
         public List<Movie> Movies { get; set; } = new List<Movie>();
         public List<Rental> Rentals { get; set; } = new List<Rental>();
 
-        public Employee(int id, string name, string email, int age, string phone, string gender, string Password, string jobtitle) :base( id, name, email,  age,  phone,  gender, Password)
+        public Employee(int id, string name, string email, int age, string phone, string gender, string password, string jobtitle) : base( id, name, email,  age,  phone,  gender, password,  jobtitle)
         {
-            Jobtitle = jobtitle;
+
         }
 
         public void AddMovie(Movie movie)

@@ -8,10 +8,9 @@ namespace Task_3
 {
     internal class Customer : Person
     {
-        public string Jobtitle { get; set; }
-        public Customer(int id, string name, string email, int age, string phone, string gender, string Password, string jobtitle) : base(id, name, email, age, phone, gender, Password)
+        public Customer(int id, string name, string email, int age, string phone, string gender, string password, string jobtitle) : base(id, name, email, age, phone, gender, password, jobtitle)
         {
-            Jobtitle = jobtitle;
+     
         }
         public override string ToString()
         {

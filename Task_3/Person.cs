@@ -15,8 +15,9 @@ namespace Task_3
         public string Phone { get; set; }
         public string Gender { get; set; }
         public string Password { get; set; }
+        public string Jobtitle { get; set; }
 
-        public Person(int id, string name, string email, int age, string phone, string gender, string password)
+        public Person(int id, string name, string email, int age, string phone, string gender, string password, string jobtitle)
         {
             Id = id;
             Name = name;
@@ -25,6 +26,7 @@ namespace Task_3
             Phone = phone;
             Gender = gender;
             Password = password;
+            Jobtitle = jobtitle;
         }
 
     }

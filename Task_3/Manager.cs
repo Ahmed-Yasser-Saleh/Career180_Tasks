@@ -8,11 +8,10 @@ namespace Task_3
 {
     internal class Manager : Person
     {
-        public string Jobtitle { get; set; }
         public List<Employee> Employees { get; set; } = new List<Employee>();
-        public Manager(int id, string name, string email, int age, string phone, string gender, string Password, string jobtitle) : base(id, name, email, age, phone, gender, Password)
+        public Manager(int id, string name, string email, int age, string phone, string gender, string password, string jobtitle) : base(id, name, email, age, phone, gender, password, jobtitle)
         {
-            jobtitle = Jobtitle;
+           
         }
         public void AddEmployee(Employee employee)
         {
