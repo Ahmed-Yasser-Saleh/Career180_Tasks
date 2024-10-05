@@ -19,6 +19,10 @@ namespace Task_4
         public void BookAppointment(int id, Doctor doctor, int patient_id, DateOnly date, TimeOnly time, DateTime dt, double price)
         {
             var patient = Patients.FirstOrDefault(p => p.Id == patient_id);
+            if(patient == null)
+            {
+                Console.WriteLine("There is no patient");
+            }
 
             Appointments.Add(new Appointment(id, doctor, patient, date, time, dt, price));
         }
@@ -78,6 +82,20 @@ namespace Task_4
             foreach (Patient wt in Waitinglist)
             {
                 Console.WriteLine(wt);
+            }
+        }
+        public void DisplayBookedAppointment()
+        {
+            if (Appointments.Count != 0)
+            {
+                foreach (Appointment ap in Appointments)
+                {
+                    Console.WriteLine(ap);
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no booked appointment");
             }
         }
         public override string ToString()

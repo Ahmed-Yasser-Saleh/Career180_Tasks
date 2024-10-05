@@ -10,11 +10,19 @@ namespace Task_4
     {
         string Department {  get; set; }
         public List<Assistant> Assistants { get; set; } = new List<Assistant>();
-        public Dictionary<DateOnly, TimeOnly> workschedule = new Dictionary<DateOnly, TimeOnly>();
+        public Dictionary<workDay, List<TimeOnly>> workschedule = new Dictionary<workDay, List<TimeOnly>>();
         public Doctor(int id, string name, string email, int age, string phone, string gender, string password, string jobtitle, string department)
             : base(id, name, email, age, phone, gender, password, jobtitle)
         {
             Department = department;
+        }
+        public void set_workschedule(Dictionary<workDay, List<TimeOnly>> dic)
+        {
+            this.workschedule = dic; 
+        }
+        public Dictionary<workDay, List<TimeOnly>> get_workschedule()
+        {
+            return workschedule;
         }
         public void AddAssistant(Assistant ass)
         {
@@ -48,6 +56,12 @@ namespace Task_4
         public override string ToString()
         {
             return $"Jobtitle: {Jobtitle}, ID: {Id}, Name: {Name}";
+        }
+        public enum workDay
+        {
+            sunday,
+            Thursday,
+            Tuesdaye
         }
     }
 }

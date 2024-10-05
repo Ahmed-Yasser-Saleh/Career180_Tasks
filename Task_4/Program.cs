@@ -1,18 +1,20 @@
-﻿namespace Task_4
+﻿using static Task_4.Doctor;
+
+namespace Task_4
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Doctor doctor = new Doctor(1, "Dr. Ahmed", "dr.ahmed@example.com", 45, "555-1234", "Male", "12345", "Doctor", "bones");
+            Doctor doctor = new Doctor(1, "Dr. Ahmed", "email", 45, "555-1234", "Male", "12345", "Doctor", "bones");
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine("Welcome to Clinic Service");
+            Console.WriteLine("--------------------------------");
 
             bool running = true;
 
             while (running)
             {
-                Console.WriteLine("--------------------------------");
-                Console.WriteLine("Welcome to Clinic Service");
-                Console.WriteLine("--------------------------------");
                 Console.WriteLine("1. Doctor Menu");
                 Console.WriteLine("2. Assistant Menu");
                 Console.WriteLine("3. Exit");
@@ -47,37 +49,69 @@
             bool doctorMenuRunning = true;
             if (!doctor.login(email, password))
             {
-                 doctorMenuRunning = false;
+                Console.WriteLine("Invalid Login");
+                doctorMenuRunning = false;
             }
             while (doctorMenuRunning)
             {
                 Console.WriteLine("\n--- Doctor Menu ---");
-                Console.WriteLine("1. Display Assistants");
-                Console.WriteLine("2. Add Assistant");
-                Console.WriteLine("3. Delete Assistant");
-                Console.WriteLine("4. Go Back to Main Menu");
+                Console.WriteLine("1. Set WorkShedule");
+                Console.WriteLine("2. Get WorkShedule");
+                Console.WriteLine("2. Display Assistants");
+                Console.WriteLine("3. Add Assistant");
+                Console.WriteLine("4. Delete Assistant");
+                Console.WriteLine("5. Go Back to Main Menu");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
 
                 switch (choice)
                 {
                     case "1":
-                        doctor.DisplayAssistants();
+                       Dictionary<workDay, List<TimeOnly>> dic = new Dictionary<workDay, List<TimeOnly>>();
+                        foreach (workDay day in Enum.GetValues(typeof(workDay)))
+                        {
+                            dic.Add(day, new List<TimeOnly>
+                            {
+                                new TimeOnly(20, 00),
+                                new TimeOnly(20, 15),
+                                new TimeOnly(20, 30),
+                                new TimeOnly(20, 45),
+                                new TimeOnly(21, 00),
+                                new TimeOnly(21, 15),
+                                new TimeOnly(21, 30)
+                            });
+                        }
+                        doctor.set_workschedule(dic);
                         break;
                     case "2":
+                        Dictionary<workDay, List<TimeOnly>> dic2 = doctor.get_workschedule();
+                        foreach(var i in dic2)
+                        {
+                            Console.WriteLine($"Day: {i.Key}");
+                            foreach(var j in i.Value)
+                            {
+                                Console.WriteLine($"Time: {j}");
+                            }
+                            Console.WriteLine("\n");
+                        }
+                        break;
+                    case "3":
+                        doctor.DisplayAssistants();
+                        break;
+                    case "4":
                         Console.Write("Enter Assistant ID: ");
                         int id = int.Parse(Console.ReadLine());
                         Console.Write("Enter Assistant Name: ");
                         string name = Console.ReadLine();
-                        Assistant newAssistant = new Assistant(id, name, "email", 30, "phone", "gender", "12345", "jobtitle");
+                        Assistant newAssistant = new Assistant(id, name, "email", 30, "phone", "gender", "12345", "Assistant");
                         doctor.AddAssistant(newAssistant);
                         break;
-                    case "3":
+                    case "5":
                         Console.Write("Enter Assistant ID to delete: ");
                         int deleteId = int.Parse(Console.ReadLine());
                         doctor.DeleteAssistant(deleteId);
                         break;
-                    case "4":
+                    case "6":
                         doctorMenuRunning = false;
                         break;
                     default:
@@ -98,6 +132,7 @@
             bool assistantMenuRunning = true;
             if (!doctor.Assistants[id - 1].login(email, password))
             {
+                Console.WriteLine("Invalid Login");
                 assistantMenuRunning = false;
             }
             
@@ -108,7 +143,7 @@
                 Console.WriteLine("2. Delete Patient");
                 Console.WriteLine("3. Book Appointment");
                 Console.WriteLine("4. Display Waiting List");
-                Console.WriteLine("5. Display Available Appointments");
+                Console.WriteLine("5. Display Booked Appointments");
                 Console.WriteLine("6. Go Back to Main Menu");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
@@ -120,7 +155,7 @@
                         int Id = int.Parse(Console.ReadLine());
                         Console.Write("Enter Patient Name: ");
                         string name = Console.ReadLine();
-                        Patient newPatient = new Patient(Id, name, "email", 25, "phone", "gender", "password", "jobtitle", doctor);
+                        Patient newPatient = new Patient(Id, name, "email", 25, "phone", "gender", "12345", "Patient", doctor);
                         doctor.Assistants[id - 1].AddPatient(newPatient);
                         break;
                     case "2":
@@ -137,13 +172,13 @@
                         DateOnly date = DateOnly.Parse(Console.ReadLine());
                         Console.Write("Enter Appointment Time (hh:mm): ");
                         TimeOnly time = TimeOnly.Parse(Console.ReadLine());
-                        doctor.Assistants[id - 1].BookAppointment(appointmentId, doctor, patientId, date, time, DateTime.Now, 100.0);
+                         doctor.Assistants[id - 1].BookAppointment(appointmentId, doctor, patientId, date, time, DateTime.Now, 100.0);
                         break;
                     case "4":
                         doctor.Assistants[id - 1].DisplayWaitinglist();
                         break;
                     case "5":
-                        doctor.Assistants[id - 1].Patients.FirstOrDefault()?.display_availableappointment();
+                        doctor.Assistants[id - 1].DisplayBookedAppointment();
                         break;
                     case "6":
                         assistantMenuRunning = false;
