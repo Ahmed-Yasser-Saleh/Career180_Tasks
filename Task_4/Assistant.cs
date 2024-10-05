@@ -18,21 +18,31 @@ namespace Task_4
         {
             
         }
-        public void BookAppointment(int id, Doctor doctor, int patient_id,workDay day, TimeOnly time, DateTime dt, double price)
+        public void BookAppointment(int id, Doctor doctor, int patient_id, workDay day, TimeOnly time, DateTime dt, double price)
         {
             var patient = Patients.FirstOrDefault(p => p.Id == patient_id);
-            if(patient == null)
+            if (patient == null)
             {
                 Console.WriteLine("There is no patient");
             }
-            if (checkavailablity(doctor, day, time))
-            {
-                Appointments.Add(new Appointment(id, doctor, patient, day, time, dt, price));
-                Console.WriteLine("appointment has been booked");
-            }
             else
             {
-                Console.WriteLine("this date is not available");
+                if (checkavailablity(doctor, day, time))
+                {
+                    if(!Appointments.Any(app => app.doctor == doctor && app.day == day && app.timeOnly == time))
+                    {
+                        Appointments.Add(new Appointment(id, doctor, patient, day, time, dt, price));
+                        Console.WriteLine("appointment has been booked");
+                    }
+                    else
+                    {
+                            Console.WriteLine("this date is already booked");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("this date is not available");
+                }
             }
         }
         public bool checkavailablity(Doctor doctor, workDay day, TimeOnly time)

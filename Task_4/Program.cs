@@ -141,10 +141,14 @@ namespace Task_4
                 Console.WriteLine("\n--- Assistant Menu ---");
                 Console.WriteLine("1. Add Patient");
                 Console.WriteLine("2. Delete Patient");
-                Console.WriteLine("3. Book Appointment");
-                Console.WriteLine("4. Display Waiting List");
-                Console.WriteLine("5. Display Booked Appointments");
-                Console.WriteLine("6. Go Back to Main Menu");
+                Console.WriteLine("3. Display WorkShedule");
+                Console.WriteLine("4. Book Appointment");
+                Console.WriteLine("5. Add patient to waiting list");
+                Console.WriteLine("6. Remove patient from waiting list");
+                Console.WriteLine("7. Display Waiting List");
+                Console.WriteLine("8. Book Appointment");
+                Console.WriteLine("9. Display Booked Appointments");
+                Console.WriteLine("10. Go Back to Main Menu");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
 
@@ -164,6 +168,18 @@ namespace Task_4
                         doctor.Assistants[id - 1].DeletePatient(deleteId);
                         break;
                     case "3":
+                        Dictionary<workDay, List<TimeOnly>> dic2 = doctor.get_workschedule();
+                        foreach (var i in dic2)
+                        {
+                            Console.WriteLine($"Day: {i.Key}");
+                            foreach (var j in i.Value)
+                            {
+                                Console.WriteLine($"Time: {j}");
+                            }
+                            Console.WriteLine("\n");
+                        }
+                        break;
+                    case "4":
                         Console.Write("Enter Appointment ID: ");
                         int appointmentId = int.Parse(Console.ReadLine());
                         Console.Write("Enter Patient ID: ");
@@ -175,13 +191,26 @@ namespace Task_4
                         TimeOnly time = TimeOnly.Parse(Console.ReadLine());
                          doctor.Assistants[id - 1].BookAppointment(appointmentId, doctor, patientId, day, time, DateTime.Now, 100.0);
                         break;
-                    case "4":
-                        doctor.Assistants[id - 1].DisplayWaitinglist();
-                        break;
                     case "5":
-                        doctor.Assistants[id - 1].DisplayBookedAppointment();
+                        Console.Write("Enter Patient ID: ");
+                        int PatientID = int.Parse(Console.ReadLine());
+                        doctor.Assistants[id - 1].AddPatientWait(PatientID);
                         break;
                     case "6":
+                        Console.Write("Enter Patient ID: ");
+                        int patientID = int.Parse(Console.ReadLine());
+                        doctor.Assistants[id - 1].RemovePatientWait(patientID);
+                        break;
+                    case "7":
+                        doctor.Assistants[id - 1].DisplayWaitinglist();
+                        break;
+                    case "8":
+                        doctor.Assistants[id - 1].DisplayWaitinglist();
+                        break;
+                    case "9":
+                        doctor.Assistants[id - 1].DisplayBookedAppointment();
+                        break;
+                    case "10":
                         assistantMenuRunning = false;
                         break;
                     default:

@@ -17,14 +17,14 @@ namespace Task_4
         public DateTime date { get; set; }
         public double price { get; set; }
         public Appointment(int id, Doctor doctor, Patient patient, workDay day, TimeOnly time, DateTime date, double Price)
-        { 
-          Id = id;
-          this.patient = patient;
-          this.doctor = doctor;
-          this.day = day;
-          timeOnly = time;
-          this.date = date;
-          price = Price;
+        {
+            Id = id;
+            this.patient = patient;
+            this.doctor = doctor;
+            this.day = day;
+            timeOnly = time;
+            this.date = date;
+            price = Price;
         }
         public override string ToString()
         {
