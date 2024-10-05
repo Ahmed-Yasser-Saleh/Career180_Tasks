@@ -57,10 +57,10 @@ namespace Task_4
                 Console.WriteLine("\n--- Doctor Menu ---");
                 Console.WriteLine("1. Set WorkShedule");
                 Console.WriteLine("2. Get WorkShedule");
-                Console.WriteLine("2. Display Assistants");
-                Console.WriteLine("3. Add Assistant");
-                Console.WriteLine("4. Delete Assistant");
-                Console.WriteLine("5. Go Back to Main Menu");
+                Console.WriteLine("3. Display Assistants");
+                Console.WriteLine("4. Add Assistant");
+                Console.WriteLine("5. Delete Assistant");
+                Console.WriteLine("6. Go Back to Main Menu");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
 
@@ -168,11 +168,12 @@ namespace Task_4
                         int appointmentId = int.Parse(Console.ReadLine());
                         Console.Write("Enter Patient ID: ");
                         int patientId = int.Parse(Console.ReadLine());
-                        Console.Write("Enter Appointment Date (yyyy-mm-dd): ");
-                        DateOnly date = DateOnly.Parse(Console.ReadLine());
+                        Console.Write("Enter Appointment day: ");
+                        string Day = Console.ReadLine();
+                        Enum.TryParse(Day, true, out workDay day);
                         Console.Write("Enter Appointment Time (hh:mm): ");
                         TimeOnly time = TimeOnly.Parse(Console.ReadLine());
-                         doctor.Assistants[id - 1].BookAppointment(appointmentId, doctor, patientId, date, time, DateTime.Now, 100.0);
+                         doctor.Assistants[id - 1].BookAppointment(appointmentId, doctor, patientId, day, time, DateTime.Now, 100.0);
                         break;
                     case "4":
                         doctor.Assistants[id - 1].DisplayWaitinglist();

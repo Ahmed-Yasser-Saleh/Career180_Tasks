@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using static Task_4.Doctor;
 
 namespace Task_4
 {
@@ -16,20 +18,49 @@ namespace Task_4
         {
             
         }
-        public void BookAppointment(int id, Doctor doctor, int patient_id, DateOnly date, TimeOnly time, DateTime dt, double price)
+        public void BookAppointment(int id, Doctor doctor, int patient_id,workDay day, TimeOnly time, DateTime dt, double price)
         {
             var patient = Patients.FirstOrDefault(p => p.Id == patient_id);
             if(patient == null)
             {
                 Console.WriteLine("There is no patient");
             }
-
-            Appointments.Add(new Appointment(id, doctor, patient, date, time, dt, price));
+            if (checkavailablity(doctor, day, time))
+            {
+                Appointments.Add(new Appointment(id, doctor, patient, day, time, dt, price));
+                Console.WriteLine("appointment has been booked");
+            }
+            else
+            {
+                Console.WriteLine("this date is not available");
+            }
+        }
+        public bool checkavailablity(Doctor doctor, workDay day, TimeOnly time)
+        {
+            if (doctor.workschedule.ContainsKey(day))
+            {
+                foreach(var i in doctor.workschedule[day])
+                {
+                    if (time == i)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         public void DeleteAppointment(int id)
         {
             var appointment = Appointments.FirstOrDefault(p => p.Id == id);
-            Appointments.Remove(appointment);
+            if (appointment != null)
+            {
+                Appointments.Remove(appointment);
+            }
+            else
+            {
+                Console.WriteLine($"There is no appointment with id: {id}");
+            }
+            
         }
         public void AddPatient(Patient pt)
         {

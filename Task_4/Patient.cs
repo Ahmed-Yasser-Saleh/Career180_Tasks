@@ -14,17 +14,6 @@ namespace Task_4
         {
             doctor = dc;
         }
-        public void display_availableappointment()
-        {
-           foreach(var i in doctor.workschedule.Keys)
-           {
-                Console.WriteLine($"day: {i}");
-                foreach(var j in doctor.workschedule.Values)
-                {
-                    Console.WriteLine($"time: {j}");
-                }
-            }
-        }
         public override string ToString()
         {
             return $"Jobtitle: {Jobtitle}, ID: {Id}, Name: {Name}";
