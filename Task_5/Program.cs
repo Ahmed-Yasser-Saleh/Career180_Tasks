@@ -151,6 +151,7 @@ namespace Task_5
                 this.day = value;
             }
         }
+
         public override string ToString()
         {
             return $"{year}/{month}/{day}";
