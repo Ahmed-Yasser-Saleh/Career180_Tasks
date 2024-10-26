@@ -1,0 +1,8 @@
+- The input string 'a' was not in a correct format.- Void ThrowFormatException[TChar](System.ReadOnlySpan`1[TChar])- Date:10/26/2024 3:41:53 PM
+- Exception of type 'System.Exception' was thrown.- Void Main(System.String[])- Date:10/26/2024 4:40:24 PM
+- Invalid Input- Void Main(System.String[])- Date:10/26/2024 4:57:18 PM
+- The input string 0 was not in a correct format- Void Main(System.String[])- Date:10/26/2024 5:01:20 PM
+- The input string was not in a correct format- Void Main(System.String[])- Date:10/26/2024 5:01:45 PM
+- The input string y1 was not in a correct format- Void Main(System.String[])- Date:10/26/2024 5:02:21 PM
+- The input string for y1 was not in a correct format- Void Main(System.String[])- Date:10/26/2024 5:04:01 PM
+- The input string 'a' was not in a correct format.- Void ThrowFormatException[TChar](System.ReadOnlySpan`1[TChar])- Date:10/26/2024 5:23:41 PM
