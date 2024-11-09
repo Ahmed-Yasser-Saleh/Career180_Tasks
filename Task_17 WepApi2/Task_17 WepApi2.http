@@ -1,0 +1,6 @@
+@Task_17_WepApi2_HostAddress = http://localhost:5033
+
+GET {{Task_17_WepApi2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
