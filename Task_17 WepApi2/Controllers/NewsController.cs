@@ -101,16 +101,7 @@ namespace Task_17_WepApi2.Controllers
             {
                 return BadRequest("Category not found.");
             }
-            var newNews = new News
-            {
-                Title = n.Title,
-                Description = n.Description,
-                Brief = n.Brief,
-                Dt = n.Dt,
-                CtgId = n.CtgId,
-                AuthorId = n.AuthorId
-            };
-            db.News.Add(newNews);
+            db.News.Add(n);
             db.SaveChanges();
             return Created();
         }
