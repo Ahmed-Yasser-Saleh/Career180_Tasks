@@ -107,15 +107,8 @@ namespace Task_17_WepApi2.Controllers
         }
         [HttpPut("{id}")]
         public IActionResult Edit(int id, News n) {
-            var mynew = db.News.Where(n => n.Id  == id).FirstOrDefault();
-            if (mynew == null) return NotFound();
-            mynew.Title = n.Title;
-            mynew.Description = n.Description;
-            mynew.Brief = n.Brief;
-            mynew.Dt = n.Dt;
-            mynew.Ctg = n.Ctg;
-            mynew.AuthorId = n.AuthorId;
-            db.News.Update(mynew);
+            if (n == null) return NotFound();
+            db.News.Update(n);
             db.SaveChanges();
             return NoContent();
         }
