@@ -29,6 +29,12 @@ namespace Task_19_WebApi4.Controllers
                 pd.Description = p.Description;
                 pd.CategoryId = p.CategoryId;
                 pd.CategoryName = p.category.name;
+                //if (!string.IsNullOrEmpty(p.image) && System.IO.File.Exists(p.image))
+                //{
+                //    byte[] imageBytes = System.IO.File.ReadAllBytes(p.image);
+                //    pd.image = "data:image/jpeg;base64," + Convert.ToBase64String(imageBytes);
+                //}
+                pd.image = p.image;
                 pddto.Add(pd);
             }
             if (pddto.Count == 0)
@@ -69,7 +75,7 @@ namespace Task_19_WebApi4.Controllers
             };
             return Ok(pdDto);
         }
-        [HttpPost]
+        [HttpPost("/Add")]
         public ActionResult Add(Product pd)
         {
             if (pd == null)
@@ -89,11 +95,42 @@ namespace Task_19_WebApi4.Controllers
                     Name = pd.Name,
                     Price = pd.Price,
                     Description = pd.Description,
+                    image = pd.image,
                     CategoryId = pd.CategoryId,
                     CategoryName = db.Category.Where(a => a.id == pd.CategoryId).Select(a => a.name).SingleOrDefault()
-            };
+                };
 
             return CreatedAtAction("Getbyid", new { id = pd.Id }, pdDto);
+            }
+            else
+                return BadRequest(ModelState);
+        }
+        [HttpPost("/AddbyDto")]
+        public ActionResult Add(AddProductDTO pdto)
+        {
+            if (pdto == null)
+                return BadRequest();
+            var CategoryExists = db.Category.Any(a => a.id == pdto.CategoryId);
+            if (!CategoryExists)
+            {
+                return BadRequest("Category not found.");
+            }
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", pdto.image.FileName);
+            FileStream str = new FileStream(path, FileMode.Create);
+            pdto.image.CopyTo(str); //upload photo to folder
+            if (ModelState.IsValid)
+            {
+                var pd = new Product() {
+                    Name = pdto.Name,
+                    Description = pdto.Description,
+                    Price = pdto.Price,
+                    image = path,
+                    Amount = pdto.Amount,
+                    CategoryId = pdto.CategoryId
+                };
+               db.Product.Add(pd);
+               db.SaveChanges();
+               return CreatedAtAction("Getbyid", new { id = pdto.Id }, pdto);
             }
             else
                 return BadRequest(ModelState);
@@ -118,6 +155,29 @@ namespace Task_19_WebApi4.Controllers
             db.Product.Update(pd);
             db.SaveChanges();
             return Ok();
+        }
+        [HttpPost("/addimage")]
+        public IActionResult addimage(int id, IFormFile photo)
+        {
+            var pd = db.Product.Where(p => p.Id  == id).FirstOrDefault();
+            if(pd == null)
+                return NotFound();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", photo.FileName);
+            pd.image = path;
+            db.SaveChanges();
+            return Ok();      
+        }
+        [HttpGet("GetImage/{id}")]
+        public IActionResult GetImage(int id)
+        {
+            var pd = db.Product.Where(p => p.Id == id).FirstOrDefault();
+            var filePath = pd.image;
+            if (System.IO.File.Exists(filePath))
+            {
+                var image = System.IO.File.ReadAllBytes(filePath);
+                return File(image, "image/png");
+            }
+            return NotFound();
         }
     }
 }
