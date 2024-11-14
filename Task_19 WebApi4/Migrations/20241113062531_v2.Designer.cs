@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Task_19_WebApi4.Context;
+using Task_20_WebApi4.Context;
 
 #nullable disable
 
-namespace Task_19_WebApi4.Migrations
+namespace Task_20_WebApi4.Migrations
 {
     [DbContext(typeof(ProductContext))]
     [Migration("20241113062531_v2")]
